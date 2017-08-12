@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="/public/message_bus/message-bus.js" type="text/javascript"></script>
+<!-- <script src="message_bus/message-bus-ajax.js" type="text/javascript"></script>   -->
+
+<p>I'm loaded</p>
+
+
+<script type="text/javascript">
+    $(function() {
+
+        var posts = $('#posts');
+        var li = $("<li></li>");
+        li.text("crap");
+
+        //MessageBus.enableChunkedEncoding = false;
+        MessageBus.baseUrl = "/games/publish/";
+        MessageBus.start();
+        // how often do you want the callback to fire in ms
+        //MessageBus.callbackInterval = 1500;
+        MessageBus.subscribe("/games/publish", function(data){
+            parsed_data = JSON.parse(data);
+            alert("callback and ");
+            alert(parsed_data.blah);
+            li.text("callback here");
+            posts.append(li);
+        });
+
+        //$.get("/games/publish");
+        //$.post("/games/publish/answers");
+
+
+        //posts.append(li);
+
+    });
+
+
+</script>
+
+<div id="posts">
+
+</div>
+</body>
+</html>
